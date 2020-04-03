@@ -5,6 +5,8 @@ type User @entity {
 
 type Round @entity {
   id: ID!
+  blockNumber: BigInt!
+  timestamp: BigInt!
   winners: [Bytes!]!
   prizes: [BigInt!]!
   roundCloser: Bytes!

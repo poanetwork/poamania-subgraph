@@ -49,6 +49,8 @@ export function handleRewarded(event: Rewarded): void {
   executor.save();
 
   let round = new Round(event.params.roundId.toString());
+  round.blockNumber = event.block.number;
+  round.timestamp = event.block.timestamp;
   round.winners = winnersInBytes;
   round.prizes = prizes;
   round.roundCloser = event.params.executor;
