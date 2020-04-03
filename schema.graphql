@@ -1,6 +1,12 @@
-type ExampleEntity @entity {
+type User @entity {
   id: ID!
-  count: BigInt!
-  user: Bytes! # address
-  amount: BigInt! # uint256
+  amount: BigInt!
+}
+
+type Round @entity {
+  id: ID!
+  winners: [Bytes!]!
+  prizes: [BigInt!]!
+  roundCloser: Bytes!
+  roundCloserReward: BigInt!
 }

@@ -1,4 +1,4 @@
-specVersion: 0.0.1
+specVersion: 0.0.2
 schema:
   file: ./schema.graphql
 dataSources:
@@ -8,14 +8,14 @@ dataSources:
     source:
       address: "0xf7ECea96dA4951e88E699cfb67d909Ec74Ba917E"
       abi: Contract
+      startBlock: 14345682
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.2
+      apiVersion: 0.0.3
       language: wasm/assemblyscript
       entities:
         - Deposited
         - Jackpot
-        - OwnershipTransferred
         - Rewarded
         - Withdrawn
       abis:
@@ -26,8 +26,6 @@ dataSources:
           handler: handleDeposited
         - event: Jackpot(indexed uint256,address,uint256)
           handler: handleJackpot
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handleOwnershipTransferred
         - event: Rewarded(indexed uint256,address[3],uint256[3],uint256,address,uint256,uint256,address)
           handler: handleRewarded
         - event: Withdrawn(indexed address,uint256)
