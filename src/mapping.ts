@@ -2,11 +2,11 @@ import { BigInt, Bytes, Address } from '@graphprotocol/graph-ts';
 import {
   Contract,
   Deposited,
-  Jackpot,
+  Jackpot as JackpotEvent,
   Rewarded,
   Withdrawn
 } from '../generated/Contract/Contract';
-import { User, Round } from '../generated/schema';
+import { User, Round, Jackpot } from '../generated/schema';
 
 function deposit(userAddress: Address, amount: BigInt): void {
   let user = User.load(userAddress.toHex());
@@ -28,7 +28,12 @@ export function handleWithdrawn(event: Withdrawn): void {
   user.save();
 }
 
-export function handleJackpot(event: Jackpot): void {
+export function handleJackpot(event: JackpotEvent): void {
+  let jackpot = new Jackpot(event.params.roundId.toString());
+  jackpot.round = event.params.roundId.toString();
+  jackpot.winner = event.params.winner;
+  jackpot.prize = event.params.prize;
+  jackpot.save();
   deposit(event.params.winner, event.params.prize);
 }
 
@@ -52,5 +57,6 @@ export function handleRewarded(event: Rewarded): void {
   round.prizes = prizes;
   round.roundCloser = event.params.executor;
   round.roundCloserReward = event.params.executorReward;
+  round.jackpot = null;
   round.save();  
 }

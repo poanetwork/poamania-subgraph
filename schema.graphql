@@ -11,4 +11,12 @@ type Round @entity {
   prizes: [BigInt!]!
   roundCloser: Bytes!
   roundCloserReward: BigInt!
+  jackpot: Jackpot
+}
+
+type Jackpot @entity {
+  id: ID!
+  round: Round
+  winner: Bytes!
+  prize: BigInt!
 }
