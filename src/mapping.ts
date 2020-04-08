@@ -8,14 +8,18 @@ import {
 } from '../generated/Contract/Contract';
 import { User, Round } from '../generated/schema';
 
-export function handleDeposited(event: Deposited): void {
-  let user = User.load(event.params.user.toHex());
+function deposit(userAddress: Address, amount: BigInt): void {
+  let user = User.load(userAddress.toHex());
   if (user == null) {
-    user = new User(event.params.user.toHex());
+    user = new User(userAddress.toHex());
     user.amount = BigInt.fromI32(0);
   }
-  user.amount = user.amount.plus(event.params.amount);
+  user.amount = user.amount.plus(amount);
   user.save();
+}
+
+export function handleDeposited(event: Deposited): void {
+  deposit(event.params.user, event.params.amount);
 }
 
 export function handleWithdrawn(event: Withdrawn): void {
@@ -25,9 +29,7 @@ export function handleWithdrawn(event: Withdrawn): void {
 }
 
 export function handleJackpot(event: Jackpot): void {
-  let user = User.load(event.params.winner.toHex());
-  user.amount = user.amount.plus(event.params.prize);
-  user.save();
+  deposit(event.params.winner, event.params.prize);
 }
 
 export function handleRewarded(event: Rewarded): void {
@@ -38,15 +40,10 @@ export function handleRewarded(event: Rewarded): void {
 
   let winnersInBytes = new Array<Bytes>(0);
   for(let i = 0; i < winners.length; i++) {
-    let user = User.load(winners[i].toHex());
-    user.amount = user.amount.plus(prizes[i]);
-    user.save();
+    deposit(winners[i], prizes[i]);
     winnersInBytes.push(winners[i]);
   }
-
-  let executor = User.load(event.params.executor.toHex());
-  executor.amount = executor.amount.plus(event.params.executorReward);
-  executor.save();
+  deposit(event.params.executor, event.params.executorReward);
 
   let round = new Round(event.params.roundId.toString());
   round.blockNumber = event.block.number;
