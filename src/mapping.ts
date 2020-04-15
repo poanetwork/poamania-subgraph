@@ -57,6 +57,6 @@ export function handleRewarded(event: Rewarded): void {
   round.prizes = prizes;
   round.roundCloser = event.params.executor;
   round.roundCloserReward = event.params.executorReward;
-  round.jackpot = null;
-  round.save();  
+  round.jackpot = event.params.roundId.toString();
+  round.save();
 }
