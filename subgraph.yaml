@@ -6,7 +6,7 @@ dataSources:
     name: Contract
     network: poa-core
     source:
-      address: "0xf7ECea96dA4951e88E699cfb67d909Ec74Ba917E"
+      address: "0xD9505dc188d0f6dC583143e5A97D8e8cF7c107e0"
       abi: Contract
       startBlock: 14345682
     mapping:

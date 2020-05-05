@@ -4,10 +4,10 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ maxaleks/poa-mania",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ maxaleks/poa-mania-new",
     "create-local": "graph create --node http://localhost:8020/ maxaleks/poa-mania",
     "remove-local": "graph remove --node http://localhost:8020/ maxaleks/poa-mania",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 maxaleks/poa-mania"
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 maxaleks/poa-mania-new"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.17.1",
