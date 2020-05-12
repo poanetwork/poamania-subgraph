@@ -45,7 +45,11 @@ export function handleRewarded(event: Rewarded): void {
 
   let winnersInBytes = new Array<Bytes>(0);
   for(let i = 0; i < winners.length; i++) {
-    deposit(winners[i], prizes[i]);
+    if (winners[i].equals(Address.fromString('0x0000000000000000000000000000000000000000'))) {
+      prizes[i] = BigInt.fromI32(0);
+    } else {
+      deposit(winners[i], prizes[i]);
+    }
     winnersInBytes.push(winners[i]);
   }
   deposit(event.params.executor, event.params.executorReward);
